@@ -14,11 +14,11 @@ auto Reassembler::find( uint64_t pos ) noexcept
     return it;
   }
   if ( const auto pit { prev( it ) }; pit->first + pit->second.length() > pos ) {
-    // const auto res = buf_.emplace(pos, pit->second.substr(pos - pit->first));
-    const auto res = buf_.emplace_hint( it, pos, pit->second.substr( pos - pit->first ) );
+    const auto res = buf_.emplace(pos, pit->second.substr(pos - pit->first));
+    // const auto res = buf_.emplace_hint( it, pos, pit->second.substr( pos - pit->first ) );
     pit->second.resize( pos - pit->first );
-    return res;
-    // return res.first;
+    // return res;
+    return res.first;
   }
   return it;
 }
