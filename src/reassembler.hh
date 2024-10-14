@@ -1,12 +1,14 @@
 #pragma once
 
 #include "byte_stream.hh"
+#include <cstdint>
+#include <map>
 
 class Reassembler
 {
 public:
   // Construct Reassembler to write into given ByteStream.
-  explicit Reassembler( ByteStream&& output ) : output_( std::move( output ) ) {}
+  explicit Reassembler( ByteStream&& output ) : output_( std::move( output )) {}
 
   /*
    * Insert a new substring to be reassembled into a ByteStream.
@@ -41,5 +43,11 @@ public:
   const Writer& writer() const { return output_.writer(); }
 
 private:
+  uint64_t total_pending_ {};
+  std::map<uint64_t, std::string> buf_ {};
+  auto find( uint64_t pos ) noexcept;
+  bool is_end {};
+  uint64_t end_index {};
+
   ByteStream output_; // the Reassembler writes to this ByteStream
 };

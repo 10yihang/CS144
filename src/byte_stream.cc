@@ -24,7 +24,7 @@ void Writer::push( string data )
 
   total_pushed_ += data.size();
   total_buffered_ += data.size();
-  Writer::stream_.emplace( std::move(data) );
+  Writer::stream_.emplace( std::move( data ) );
 
   return;
 }
@@ -32,8 +32,8 @@ void Writer::push( string data )
 void Writer::close()
 {
   // Your code here.
-//   while(!stream_.empty()) stream_.pop();
-//   total_buffered_ = 0;
+  //   while(!stream_.empty()) stream_.pop();
+  //   total_buffered_ = 0;
   Writer::closed_ = true;
 }
 
@@ -76,15 +76,15 @@ void Reader::pop( uint64_t len )
     const uint64_t size { stream_.front().size() - remove_size_ };
     if ( len < size ) {
       remove_size_ += len;
-	  total_poped_ += len;
-	  total_buffered_ -= len;
+      total_poped_ += len;
+      total_buffered_ -= len;
       break;
     }
 
     remove_size_ = 0;
     len -= size;
-	total_poped_ += size;
-	total_buffered_ -= size;
+    total_poped_ += size;
+    total_buffered_ -= size;
 
     stream_.pop();
   }
